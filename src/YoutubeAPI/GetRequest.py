@@ -5,32 +5,22 @@ API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 youtube = build("youtube", "v3", developerKey=API_KEY)
 
-def get_video_details(video_id):
-    """Fetch video details (title, views, likes) from YouTube API."""
-    request = youtube.videos().list(
-        part="snippet,statistics",
-        id=video_id
-    )
-    response = request.execute()
+def retrieve_channel_id(search_item):
+    try:
+          """for retrieving the if x is streaming"""
+          request = youtube.search().list(
+               part = "snippet",
+               q = search_item,
+               eventType = "live",
+               type="video",
+               channelId = "UC9p_lqQ0FEDz327Vgf5JwqA"
 
-    if not response.get("items"):
-        print("Invalid video ID or no data available.")
-        return None
-
-    video = response["items"][0]
-    title = video["snippet"]["title"]
-    views = video["statistics"].get("viewCount", "N/A")
-    likes = video["statistics"].get("likeCount", "N/A")
-
-    return {
-        "Title": title,
-        "Views": views,
-        "Likes": likes
-    }
-
+          )
+          response = request.execute()
+          return response["items"][0]["snippet"]["thumbnails"]["default"]["url"]
+    except:
+          print("does not exist")
 # Example usage
-video_id = "dQw4w9WgXcQ"  # Replace with any YouTube video ID
-video_info = get_video_details(video_id)
+video_q = "Koseki Bijou"  # Replace with any YouTube video ID
+video_info = retrieve_channel_id(video_q)
 
-if video_info:
-    print(video_info)
