@@ -1,7 +1,3 @@
-<script setup>
-import Streams from '@/components/StreamsPlayer.vue'
-</script>
-
 <template>
   <Streams />
 </template>
