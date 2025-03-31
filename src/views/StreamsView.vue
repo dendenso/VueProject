@@ -1,5 +1,9 @@
+<script setup>
+import StreamsItem from '../components/StreamsItem.vue'
+</script>
+
 <template>
-  <Streams />
+  <StreamsItem />
 </template>
 
 <style>
